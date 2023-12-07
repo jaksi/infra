@@ -50,13 +50,31 @@ in {
       enable = true;
       dataDir = "/nix/persist/caddy";
       virtualHosts = let
-        hosts =
-          [ "prometheus" "grafana" "zigbee2mqtt" "home-assistant" "unifi" ];
+        hosts = {
+          prometheus.address = "sun:9090";
+          grafana = {
+            address = "sun:3000";
+            extraConfig = ''
+              header_up X-WEBAUTH-USER "admin"
+            '';
+          };
+          zigbee2mqtt.address = "sun:8081";
+          home-assistant.address = "sun:8123";
+          unifi = {
+            address = "sun:8443";
+            extraConfig = ''
+              transport http {
+                tls_insecure_skip_verify
+              }
+            '';
+          };
+        };
       in {
         "unauthenticated" = {
           hostName = "";
           serverAliases =
-            lib.lists.forEach hosts (host: "${host}.infra.jaksi.dev");
+            lib.attrsets.mapAttrsToList (host: _: "${host}.infra.jaksi.dev")
+            hosts;
           extraConfig = ''
             reverse_proxy ${config.services.oauth2_proxy.httpAddress}
           '';
@@ -64,15 +82,15 @@ in {
         "authenticated" = {
           hostName = "http://:${builtins.toString oauth2ProxyPort}";
           listenAddresses = [ "127.0.0.1" "::1" ];
-          extraConfig = lib.strings.concatLines (lib.lists.forEach hosts
-            (host: ''
+          extraConfig = lib.strings.concatLines (lib.attrsets.mapAttrsToList
+            (host: cfg: ''
               @host_${host} {
                 host ${host}.infra.jaksi.dev
               }
-              reverse_proxy @host_${host} "https://${host}.tailbb015.ts.net" {
-                header_up host {upstream_hostport}
+              reverse_proxy @host_${host} ${cfg.address} {
+                ${cfg.extraConfig or ""}
               }
-            ''));
+            '') hosts);
         };
       };
     };
