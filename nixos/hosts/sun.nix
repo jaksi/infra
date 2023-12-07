@@ -306,7 +306,7 @@ in {
     };
     unifi = {
       enable = true;
-      unifiPackage = pkgs.unifi;
+      unifiPackage = pkgs.unifi8;
     };
   };
   systemd.services.caddy.environment.TS_AUTHKEY = secrets.caddyTailscaleAuthKey;
