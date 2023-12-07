@@ -86,7 +86,6 @@ in {
     prometheus = {
       enable = true;
       stateDir = "persist/prometheus";
-      listenAddress = "localhost";
       exporters = {
         domain = {
           enable = true;
@@ -247,6 +246,7 @@ in {
       enable = true;
       dataDir = "/nix/persist/grafana";
       settings = {
+        server.http_addr = "0.0.0.0";
         "auth.proxy" = {
           enabled = true;
           header_name = "X-WEBAUTH-USER";
@@ -289,7 +289,6 @@ in {
       extraComponents = [ "default_config" "mqtt" "met_eireann" "roomba" ];
       config = {
         http = {
-          server_host = "localhost";
           use_x_forwarded_for = true;
           trusted_proxies = [ "127.0.0.1" "::1" ];
         };
