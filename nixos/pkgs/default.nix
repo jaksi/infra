@@ -23,10 +23,4 @@ self: super: {
       ln -sf ${self.nodejs_18}/bin/node $out/
     '';
   };
-  caddy-tailscale = super.callPackage ./caddy.nix {
-    caddy = super.caddy;
-    modules."github.com/tailscale/caddy-tailscale" =
-      "07491c582411adee9deda2b6cc784a8e6185bb60";
-    vendorHash = "sha256-Cr2unXdXzzmo+jzy3gvoZ2eVzEm/x8P+fY3czK4h+/4=";
-  };
 }
