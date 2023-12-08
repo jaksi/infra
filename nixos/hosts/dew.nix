@@ -60,14 +60,6 @@ in {
           };
           zigbee2mqtt.address = "sun:8081";
           home-assistant.address = "sun:8123";
-          unifi = {
-            address = "sun:8443";
-            extraConfig = ''
-              transport http {
-                tls_insecure_skip_verify
-              }
-            '';
-          };
         };
       in {
         "unauthenticated" = {

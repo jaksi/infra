@@ -15,7 +15,7 @@ in {
 
   boot.initrd.availableKernelModules = [ "nvme" ];
   environment.persistence."/nix/persist/system".directories =
-    [ "/var/lib/persist" "/var/lib/unifi" ];
+    [ "/var/lib/persist" ];
   services = {
     tailscale.extraUpFlags = [ "--advertise-routes=192.168.1.0/24" ];
     prometheus = {
@@ -231,10 +231,6 @@ in {
         };
         prometheus = { };
       };
-    };
-    unifi = {
-      enable = true;
-      unifiPackage = pkgs.unifi8;
     };
   };
 }
