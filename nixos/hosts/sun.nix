@@ -3,7 +3,6 @@
 { config, lib, pkgs, ... }:
 
 let
-  caddyAdminPort = 2019;
   allHosts = [ "ant" "sun" "dew" "jet" ];
   secrets = import ../secrets.nix;
 in {
@@ -19,70 +18,6 @@ in {
     [ "/var/lib/persist" "/var/lib/unifi" ];
   services = {
     tailscale.extraUpFlags = [ "--advertise-routes=192.168.1.0/24" ];
-    caddy = {
-      enable = true;
-      package = pkgs.caddy-tailscale;
-      enableReload = false;
-      dataDir = "/nix/persist/caddy";
-      globalConfig = ''
-        admin localhost:${builtins.toString caddyAdminPort}
-        servers {
-          metrics
-        }
-        auto_https off
-      '';
-      virtualHosts = let
-        hosts = {
-          prometheus.port = config.services.prometheus.port;
-          grafana = {
-            port = config.services.grafana.settings.server.http_port;
-            extraConfig = ''
-              header_up X-WEBAUTH-USER "admin"
-            '';
-          };
-          zigbee2mqtt.port = config.services.zigbee2mqtt.settings.frontend.port;
-          home-assistant.port =
-            config.services.home-assistant.config.http.server_port;
-          unifi = {
-            port = 8443;
-            extraConfig = ''
-              transport http {
-                tls_insecure_skip_verify
-              }
-            '';
-          };
-        };
-      in {
-        "http" = {
-          hostName = ":80";
-          listenAddresses =
-            lib.attrsets.mapAttrsToList (host: _: "tailscale/${host}") hosts;
-          extraConfig = ''
-            @host {
-              header_regexp host host [^.]*
-            }
-            redir @host https://{re.host.0}.tailbb015.ts.net{uri} permanent
-          '';
-        };
-        "https" = {
-          hostName = ":443";
-          listenAddresses =
-            lib.attrsets.mapAttrsToList (host: _: "tailscale+tls/${host}")
-            hosts;
-          extraConfig = lib.strings.concatLines (lib.attrsets.mapAttrsToList
-            (host: cfg: ''
-              @host_${host} {
-                host ${host}.tailbb015.ts.net
-              }
-              reverse_proxy @host_${host} localhost:${
-                builtins.toString cfg.port
-              } {
-                ${cfg.extraConfig or ""}
-              }
-            '') hosts);
-        };
-      };
-    };
     prometheus = {
       enable = true;
       stateDir = "persist/prometheus";
@@ -222,12 +157,6 @@ in {
             }];
           }
           {
-            job_name = "caddy";
-            static_configs = [{
-              targets = [ "localhost:${builtins.toString caddyAdminPort}" ];
-            }];
-          }
-          {
             job_name = "home-assistant";
             metrics_path = "/api/prometheus";
             bearer_token = secrets.prometheusHomeAssistantToken;
@@ -308,5 +237,4 @@ in {
       unifiPackage = pkgs.unifi8;
     };
   };
-  systemd.services.caddy.environment.TS_AUTHKEY = secrets.caddyTailscaleAuthKey;
 }
