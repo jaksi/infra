@@ -3,6 +3,7 @@
 { config, lib, pkgs, ... }:
 
 let
+  stable = import <nixos-stable> { config.allowUnfree = true; };
   allHosts = [ "ant" "sun" "dew" "jet" ];
   secrets = import ../secrets.nix;
 in {
@@ -211,6 +212,7 @@ in {
       enable = true;
       dataDir = "/nix/persist/zigbee2mqtt";
       settings.frontend.port = 8081;
+      package = stable.zigbee2mqtt;
     };
     home-assistant = {
       enable = true;
@@ -231,6 +233,7 @@ in {
         };
         prometheus = { };
       };
+      package = stable.home-assistant;
     };
   };
 }
