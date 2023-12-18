@@ -55,7 +55,7 @@ in {
         "/root/.config/github-copilot"
         "/root/.local/share/fish"
       ];
-      files = [ "/etc/machine-id" ];
+      files = [ "/etc/machine-id" "/root/.nix-channels" ];
     };
     systemPackages = with pkgs; [
       bat
