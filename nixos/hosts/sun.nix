@@ -18,7 +18,6 @@ in {
   environment.persistence."/nix/persist/system".directories =
     [ "/var/lib/persist" ];
   services = {
-    tailscale.extraUpFlags = [ "--advertise-routes=192.168.1.0/24" ];
     prometheus = {
       enable = true;
       stateDir = "persist/prometheus";
