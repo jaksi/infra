@@ -4,7 +4,7 @@
 
 let
   stable = import <nixos-stable> { config.allowUnfree = true; };
-  allHosts = [ "ant" "sun" "dew" "jet" ];
+  allHosts = [ "ant" "sun" "dew" "jet" "way" ];
   secrets = import ../secrets.nix;
 in {
   imports = [ ../hardware/amd.nix ../roles/common.nix ../roles/server.nix ];
