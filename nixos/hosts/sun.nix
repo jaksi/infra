@@ -121,7 +121,7 @@ in {
           {
             job_name = "snmp";
             metrics_path = "/snmp";
-            static_configs = [{ targets = [ "192.168.1.4" ]; }];
+            static_configs = [{ targets = [ "10.0.0.3" ]; }];
             params.module = [ "synology" ];
             relabel_configs = [
               {
