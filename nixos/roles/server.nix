@@ -1,8 +1,5 @@
-{ modulesPath, ... }:
-
 {
-  imports =
-    [ (modulesPath + "/profiles/headless.nix") ../modules/vscode-tunnel.nix ];
+  imports = [ ../modules/vscode-tunnel.nix ];
 
   environment.persistence."/nix/persist/system".directories =
     [ "/root/.vscode-server" ];

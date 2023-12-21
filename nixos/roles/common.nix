@@ -83,8 +83,11 @@ in {
   };
   users = {
     defaultUserShell = pkgs.fish;
-    users.root.openssh.authorizedKeys.keyFiles =
-      [ (builtins.fetchurl "https://github.com/jaksi.keys") ];
+    users.root = {
+      hashedPassword = secrets.hashedUserPassword;
+      openssh.authorizedKeys.keyFiles =
+        [ (builtins.fetchurl "https://github.com/jaksi.keys") ];
+    };
   };
   services = {
     fstrim.enable = true;
