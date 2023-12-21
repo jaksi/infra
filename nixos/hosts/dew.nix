@@ -6,7 +6,12 @@ let
   oauth2ProxyPort = 8000;
   secrets = import ../secrets.nix;
 in {
-  imports = [ ../hardware/x86_64.nix ../roles/common.nix ../roles/server.nix ];
+  imports = [
+    ../hardware/x86_64.nix
+    ../roles/common.nix
+    ../roles/server.nix
+    ../roles/remote.nix
+  ];
 
   networking.hostName = "dew";
   programs.tmux.extraConfig = ''

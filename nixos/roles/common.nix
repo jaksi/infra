@@ -106,7 +106,7 @@ in {
     };
     tailscale = {
       enable = true;
-      extraUpFlags = [ "--accept-routes" "--ssh" ];
+      extraUpFlags = [ "--ssh" ];
       useRoutingFeatures = "server";
       authKeyFile = pkgs.writeText "tailscale_key" secrets.tailscaleAuthKey;
     };
