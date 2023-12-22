@@ -34,6 +34,7 @@ in {
   time.timeZone = "Europe/Dublin";
   networking = {
     useDHCP = true;
+    nftables.enable = true;
     firewall = {
       allowedTCPPorts = config.services.openssh.ports;
       allowedUDPPorts = [ ];
