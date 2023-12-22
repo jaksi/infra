@@ -49,5 +49,9 @@ in {
         dhcp-host = [ "ArcherAX55,10.0.0.2" "nas,10.0.0.3" "sun,10.0.0.4" ];
       };
     };
+    prometheus.exporters.dnsmasq = {
+      enable = true;
+      leasesPath = "/nix/persist/dnsmasq.leases";
+    };
   };
 }
