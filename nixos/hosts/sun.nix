@@ -169,6 +169,10 @@ in {
               ];
             }];
           }
+          {
+            job_name = "dnsmasq";
+            static_configs = [{ targets = [ "way:9153" ]; }];
+          }
         ];
     };
     grafana = {
