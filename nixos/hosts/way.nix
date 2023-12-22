@@ -15,23 +15,21 @@ in {
 
   boot.initrd.availableKernelModules = [ "nvme" ];
   networking = {
-    firewall = {
-      interfaces.${lanInterface} = {
-        allowedTCPPorts = [ 53 ];
-        allowedUDPPorts = [ 53 67 ];
-      };
-      extraCommands = ''
-        iptables -t nat -A POSTROUTING -o ${wanInterface} -j MASQUERADE
-        iptables -A FORWARD -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
-        iptables -A FORWARD -i ${lanInterface} -o ${wanInterface} -j ACCEPT
-      '';
-    };
     interfaces.${lanInterface} = {
       useDHCP = false;
       ipv4.addresses = [{
         address = "10.0.0.1";
         prefixLength = 16;
       }];
+    };
+    nat = {
+      enable = true;
+      internalInterfaces = [ lanInterface ];
+      externalInterface = wanInterface;
+    };
+    firewall.interfaces.${lanInterface} = {
+      allowedTCPPorts = [ 53 ];
+      allowedUDPPorts = [ 53 67 ];
     };
   };
   services = {
