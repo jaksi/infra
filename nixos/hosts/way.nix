@@ -33,6 +33,33 @@ in {
         sourcePort = 41642;
       }];
     };
+    nftables.tables.accounting = {
+      family = "ip";
+      content = ''
+        set inbound {
+          typeof ip saddr . ip protocol
+          flags dynamic,timeout
+          size 65535
+          timeout 24h
+          counter
+        }
+        set outbound {
+          typeof ip daddr . ip protocol
+          flags dynamic,timeout
+          size 65535
+          timeout 24h
+          counter
+        }
+        chain prerouting {
+          type filter hook prerouting priority 0;
+          iifname ${lanInterface} update @inbound { ip saddr . ip protocol }
+        }
+        chain postrouting {
+          type filter hook postrouting priority 0;
+          oifname ${lanInterface} update @outbound { ip daddr . ip protocol }
+        }
+      '';
+    };
     firewall.interfaces.${lanInterface} = {
       allowedTCPPorts = [ 53 ];
       allowedUDPPorts = [ 53 67 ];
