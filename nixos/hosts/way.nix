@@ -15,6 +15,7 @@ in {
 
   boot.initrd.availableKernelModules = [ "nvme" ];
   networking = {
+    firewall.allowedUDPPorts = [ 41641 ];
     interfaces.${lanInterface} = {
       useDHCP = false;
       ipv4.addresses = [{
