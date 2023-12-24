@@ -27,6 +27,11 @@ in {
       enable = true;
       internalInterfaces = [ lanInterface ];
       externalInterface = wanInterface;
+      forwardPorts = [{
+        destination = "10.0.0.4:41642";
+        proto = "udp";
+        sourcePort = 41642;
+      }];
     };
     firewall.interfaces.${lanInterface} = {
       allowedTCPPorts = [ 53 ];
