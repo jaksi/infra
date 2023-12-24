@@ -30,7 +30,7 @@ in {
   fileSystems."/boot".fsType = "ext4";
   networking.firewall = {
     allowedTCPPorts = [ 80 443 ];
-    allowedUDPPorts = [ 443 ];
+    allowedUDPPorts = [ 443 41641 ];
   };
   services = {
     oauth2_proxy = {
