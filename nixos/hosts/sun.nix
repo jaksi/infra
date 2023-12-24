@@ -15,9 +15,11 @@ in {
   '';
 
   boot.initrd.availableKernelModules = [ "nvme" ];
+  networking.firewall.allowedUDPPorts = [ 41642 ];
   environment.persistence."/nix/persist/system".directories =
     [ "/var/lib/persist" ];
   services = {
+    tailscale.port = 41642;
     prometheus = {
       enable = true;
       stateDir = "persist/prometheus";
