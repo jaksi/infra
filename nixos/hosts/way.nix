@@ -66,6 +66,7 @@ in {
     };
   };
   services = {
+    resolved.enable = false;
     tailscale.extraUpFlags = [ "--advertise-routes=10.0.0.0/16" ];
     https-dns-proxy = {
       enable = true;
@@ -80,7 +81,7 @@ in {
         dhcp-leasefile = "/nix/persist/dnsmasq.leases";
         dhcp-range = "10.0.0.100,10.0.0.200,12h";
         dhcp-host = [ "ArcherAX55,10.0.0.2" "nas,10.0.0.3" "sun,10.0.0.4" ];
-        bind-interfaces = true;
+        address = "/test.invalid/127.0.0.1";
       };
     };
     prometheus.exporters.dnsmasq = {
