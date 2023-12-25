@@ -75,9 +75,12 @@ in {
     dnsmasq = {
       enable = true;
       settings = {
-        server =
-          [ "127.0.0.1#${toString config.services.https-dns-proxy.port}" ];
+        server = [
+          "127.0.0.1#${toString config.services.https-dns-proxy.port}"
+          "/tailbb015.ts.net/100.100.100.100"
+        ];
         interface = "${lanInterface}";
+        no-resolv = true;
         dhcp-leasefile = "/nix/persist/dnsmasq.leases";
         dhcp-range = "10.0.0.100,10.0.0.200,12h";
         dhcp-host = [ "ArcherAX55,10.0.0.2" "nas,10.0.0.3" "sun,10.0.0.4" ];
