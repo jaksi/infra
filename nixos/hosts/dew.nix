@@ -78,7 +78,7 @@ in {
         };
         "authenticated" = {
           hostName = "http://:${builtins.toString oauth2ProxyPort}";
-          listenAddresses = [ "127.0.0.1" ];
+          listenAddresses = [ "127.0.0.1" "::1" ];
           extraConfig = lib.strings.concatLines (lib.attrsets.mapAttrsToList
             (host: cfg: ''
               @host_${host} {
