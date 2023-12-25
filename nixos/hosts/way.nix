@@ -80,6 +80,7 @@ in {
         dhcp-leasefile = "/nix/persist/dnsmasq.leases";
         dhcp-range = "10.0.0.100,10.0.0.200,12h";
         dhcp-host = [ "ArcherAX55,10.0.0.2" "nas,10.0.0.3" "sun,10.0.0.4" ];
+        bind-interfaces = true;
       };
     };
     prometheus.exporters.dnsmasq = {

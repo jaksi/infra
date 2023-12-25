@@ -33,6 +33,7 @@ in {
   }];
   time.timeZone = "Europe/Dublin";
   networking = {
+    useNetworkd = true;
     useDHCP = true;
     nftables.enable = true;
     firewall = {
