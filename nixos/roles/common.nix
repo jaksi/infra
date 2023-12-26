@@ -38,7 +38,6 @@ in {
     nftables.enable = true;
     firewall = {
       allowedTCPPorts = config.services.openssh.ports;
-      allowedUDPPorts = [ ];
       trustedInterfaces = [ config.services.tailscale.interfaceName ];
     };
   };
