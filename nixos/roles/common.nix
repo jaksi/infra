@@ -34,13 +34,21 @@ in {
   time.timeZone = "Europe/Dublin";
   networking = {
     useNetworkd = true;
-    useDHCP = true;
+    useDHCP = false;
     nftables.enable = true;
     firewall = {
       allowedTCPPorts = config.services.openssh.ports;
       allowedUDPPorts = [ ];
       trustedInterfaces = [ config.services.tailscale.interfaceName ];
     };
+  };
+  systemd.network.networks."99-ethernet" = {
+    matchConfig.Name = [ "en*" "eth*" ];
+    DHCP = "yes";
+    dns = [ "127.0.0.1:5053" ];
+    dhcpV4Config.UseDNS = false;
+    dhcpV6Config.UseDNS = false;
+    ipv6AcceptRAConfig.UseDNS = false;
   };
   environment = {
     persistence."/nix/persist/system" = {
@@ -112,6 +120,11 @@ in {
       useRoutingFeatures = "server";
       authKeyFile = pkgs.writeText "tailscale_key" secrets.tailscaleAuthKey;
     };
+    https-dns-proxy = {
+      enable = true;
+      provider.kind = "google";
+    };
+    resolved.fallbackDns = [ ];
     prometheus.exporters = {
       blackbox = {
         enable = true;

@@ -68,10 +68,6 @@ in {
   services = {
     resolved.enable = false;
     tailscale.extraUpFlags = [ "--advertise-routes=10.0.0.0/16" ];
-    https-dns-proxy = {
-      enable = true;
-      provider.kind = "google";
-    };
     dnsmasq = {
       enable = true;
       settings = {
