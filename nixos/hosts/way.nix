@@ -16,13 +16,6 @@ in {
   boot.initrd.availableKernelModules = [ "nvme" ];
   networking = {
     firewall.allowedUDPPorts = [ 41641 ];
-    interfaces.${lanInterface} = {
-      useDHCP = false;
-      ipv4.addresses = [{
-        address = "10.0.0.1";
-        prefixLength = 16;
-      }];
-    };
     nat = {
       enable = true;
       internalInterfaces = [ lanInterface ];
@@ -65,17 +58,20 @@ in {
       allowedUDPPorts = [ 53 67 ];
     };
   };
+  systemd.network.networks."90-lan" = {
+    matchConfig.Name = [ lanInterface ];
+    address = [ "10.0.0.1/16" ];
+  };
   services = {
-    resolved.enable = false;
     tailscale.extraUpFlags = [ "--advertise-routes=10.0.0.0/16" ];
     dnsmasq = {
       enable = true;
+      resolveLocalQueries = false;
       settings = {
-        server = [
-          "127.0.0.1#${toString config.services.https-dns-proxy.port}"
-          "/tailbb015.ts.net/100.100.100.100"
-        ];
-        interface = "${lanInterface}";
+        server =
+          [ "127.0.0.1#${toString config.services.https-dns-proxy.port}" ];
+        interface = lanInterface;
+        bind-interfaces = true;
         no-resolv = true;
         dhcp-leasefile = "/nix/persist/dnsmasq.leases";
         dhcp-range = "10.0.0.100,10.0.0.200,12h";
