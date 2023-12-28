@@ -63,7 +63,8 @@ in {
     address = [ "10.0.0.1/16" ];
   };
   services = {
-    tailscale.extraUpFlags = [ "--advertise-routes=10.0.0.0/16" ];
+    tailscale.extraUpFlags =
+      [ "--advertise-routes=10.0.0.0/16" "--advertise-exit-node" ];
     dnsmasq = {
       enable = true;
       resolveLocalQueries = false;
