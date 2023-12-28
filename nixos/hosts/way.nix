@@ -1,10 +1,13 @@
 # Beelink EQ12
 
-{ config, ... }:
+{ config, lib, ... }:
+
+with lib;
 
 let
   wanInterface = "enp1s0";
   lanInterface = "enp2s0";
+  secrets = import ../secrets.nix;
 in {
   imports = [ ../hardware/intel.nix ../roles/common.nix ../roles/server.nix ];
 
@@ -73,7 +76,9 @@ in {
         no-resolv = true;
         dhcp-leasefile = "/nix/persist/dnsmasq.leases";
         dhcp-range = "10.0.0.100,10.0.0.200,12h";
-        dhcp-host = [ "ArcherAX55,10.0.0.2" "nas,10.0.0.3" "sun,10.0.0.4" ];
+        dhcp-host =
+          attrsets.mapAttrsToList (name: host: "${host.mac},${host.ip},${name}")
+          secrets.dhcpHosts;
         address = "/test.invalid/127.0.0.1";
       };
     };
