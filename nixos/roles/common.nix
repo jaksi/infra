@@ -4,6 +4,14 @@ let
   impermanence = builtins.fetchTarball
     "https://github.com/nix-community/impermanence/archive/master.tar.gz";
   secrets = import ../secrets.nix;
+  colors = {
+    air = "#1e66f5";
+    jet = "#40a02b";
+    dew = "#179299";
+    way = "#d20f39";
+    sun = "#ea76cb";
+    ant = "#df8e1d";
+  };
 in {
   imports = [ "${impermanence}/nixos.nix" ];
 
@@ -261,6 +269,9 @@ in {
         set -g escape-time 10
         set -g allow-passthrough 1
         set -g default-terminal "tmux-256color"
+        set -g window-status-current-style fg=#eff1f5,bg=${
+          colors.${config.networking.hostName}
+        }
         set -sa terminal-features ',xterm-256color:RGB'
       '';
     };

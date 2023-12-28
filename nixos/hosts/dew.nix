@@ -14,9 +14,6 @@ in {
   ];
 
   networking.hostName = "dew";
-  programs.tmux.extraConfig = ''
-    set -g window-status-current-style fg=#eff1f5,bg=#179299
-  '';
 
   virtualisation.hypervGuest.enable = true;
   boot = {

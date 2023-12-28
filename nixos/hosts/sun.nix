@@ -10,9 +10,6 @@ in {
   imports = [ ../hardware/amd.nix ../roles/common.nix ../roles/server.nix ];
 
   networking.hostName = "sun";
-  programs.tmux.extraConfig = ''
-    set -g window-status-current-style fg=#eff1f5,bg=#1e66f5
-  '';
 
   boot.initrd.availableKernelModules = [ "nvme" ];
   networking.firewall.allowedUDPPorts = [ 41642 ];

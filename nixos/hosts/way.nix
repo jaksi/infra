@@ -9,9 +9,6 @@ in {
   imports = [ ../hardware/intel.nix ../roles/common.nix ../roles/server.nix ];
 
   networking.hostName = "way";
-  programs.tmux.extraConfig = ''
-    set -g window-status-current-style fg=#eff1f5,bg=#ea76cb
-  '';
 
   boot.initrd.availableKernelModules = [ "nvme" ];
   networking = {
