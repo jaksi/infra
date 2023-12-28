@@ -259,7 +259,7 @@ in {
     tmux = {
       enable = true;
       extraConfig = ''
-        set -g status-left ' '
+        set -g status-left ' #h '
         set -g status-right ' '
         set -g status-style fg=#4c4f69,bg=#ccd0da
         set -g window-status-format ' #I #W '
