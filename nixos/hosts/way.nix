@@ -59,6 +59,14 @@ in {
     matchConfig.Name = [ lanInterface ];
     address = [ "10.0.0.1/16" ];
   };
+  systemd.network.networks."90-wan" = {
+    matchConfig.Name = [ wanInterface ];
+    DHCP = "yes";
+    dns = [ "127.0.0.1" ];
+    dhcpV4Config.UseDNS = false;
+    dhcpV6Config.UseDNS = false;
+    ipv6AcceptRAConfig.UseDNS = false;
+  };
   services = {
     tailscale.extraUpFlags =
       [ "--advertise-routes=10.0.0.0/16" "--advertise-exit-node" ];
