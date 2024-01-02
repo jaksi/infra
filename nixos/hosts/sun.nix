@@ -2,6 +2,8 @@
 
 { config, lib, pkgs, ... }:
 
+with lib;
+
 let
   stable = import <nixos-stable> { config.allowUnfree = true; };
   allHosts = [ "ant" "sun" "dew" "jet" "way" ];
@@ -39,10 +41,10 @@ in {
       scrapeConfigs = let
         blackboxTargets = [ "1.1.1.1" "8.8.8.8" ];
         blackboxTCPTargets =
-          lib.lists.forEach blackboxTargets (target: "${target}:443");
+          lists.forEach blackboxTargets (target: "${target}:443");
         blackboxICMPTargets = blackboxTargets ++ allHosts;
-      in lib.lists.flatten (lib.lists.forEach allHosts (host:
-        lib.attrsets.mapAttrsToList (module: targets: {
+      in lists.flatten (lists.forEach allHosts (host:
+        attrsets.mapAttrsToList (module: targets: {
           job_name = "blackbox_${module}_${host}";
           metrics_path = "/probe";
           params.module = [ module ];
@@ -110,7 +112,7 @@ in {
           {
             job_name = "node";
             static_configs = [{
-              targets = lib.lists.forEach allHosts (target:
+              targets = lists.forEach allHosts (target:
                 "${target}:${
                   builtins.toString
                   config.services.prometheus.exporters.node.port
@@ -148,7 +150,7 @@ in {
           {
             job_name = "systemd";
             static_configs = [{
-              targets = lib.lists.forEach allHosts (target:
+              targets = lists.forEach allHosts (target:
                 "${target}:${
                   builtins.toString
                   config.services.prometheus.exporters.systemd.port
