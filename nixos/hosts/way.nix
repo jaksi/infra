@@ -30,26 +30,23 @@ in {
       family = "ip";
       content = ''
         set inbound {
-          typeof ip saddr . ip protocol
-          flags dynamic,timeout
-          size 65535
-          timeout 24h
-          counter
-        }
-        set outbound {
           typeof ip daddr . ip protocol
           flags dynamic,timeout
           size 65535
           timeout 24h
           counter
         }
-        chain prerouting {
-          type filter hook prerouting priority 0;
-          iifname ${lanInterface} update @inbound { ip saddr . ip protocol }
+        set outbound {
+          typeof ip saddr . ip protocol
+          flags dynamic,timeout
+          size 65535
+          timeout 24h
+          counter
         }
-        chain postrouting {
-          type filter hook postrouting priority 0;
-          oifname ${lanInterface} update @outbound { ip daddr . ip protocol }
+        chain forward {
+          type filter hook forward priority 0;
+          iifname ${wanInterface} update @inbound { ip daddr . ip protocol }
+          oifname ${wanInterface} update @outbound { ip saddr . ip protocol }
         }
       '';
     };
