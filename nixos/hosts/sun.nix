@@ -174,6 +174,29 @@ in {
             job_name = "dnsmasq";
             static_configs = [{ targets = [ "way:9153" ]; }];
           }
+          {
+            job_name = "nftables";
+            static_configs = [{ targets = [ "way:8080" ]; }];
+            metric_relabel_configs = [
+              {
+                source_labels = [ "ip_address" ];
+                target_label = "name";
+                regex = "^(.*)$";
+                replacement = "unknown: $1";
+              }
+              {
+                source_labels = [ "ip_address" ];
+                target_label = "name";
+                regex = "^(100.*)$";
+                replacement = "tailscale: $1";
+              }
+            ] ++ attrsets.mapAttrsToList (name: host: {
+              source_labels = [ "ip_address" ];
+              target_label = "name";
+              regex = "^${host.ip}$";
+              replacement = name;
+            }) secrets.dhcpHosts;
+          }
         ];
     };
     grafana = {
