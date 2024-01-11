@@ -48,6 +48,14 @@ in {
           iifname ${wanInterface} update @inbound { ip daddr . ip protocol }
           oifname ${wanInterface} update @outbound { ip saddr . ip protocol }
         }
+        chain input {
+          type filter hook input priority 0;
+          iifname ${wanInterface} update @inbound { 127.0.0.1 . ip protocol }
+        }
+        chain output {
+          type filter hook output priority 0;
+          oifname ${wanInterface} update @outbound { 127.0.0.1 . ip protocol }
+        }
       '';
     };
     firewall.interfaces.${lanInterface} = {
