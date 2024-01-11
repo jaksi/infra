@@ -190,6 +190,12 @@ in {
                 regex = "^(100.*)$";
                 replacement = "tailscale: $1";
               }
+              {
+                source_labels = [ "ip_address" ];
+                target_label = "name";
+                regex = "^127.0.0.1$";
+                replacement = "way";
+              }
             ] ++ attrsets.mapAttrsToList (name: host: {
               source_labels = [ "ip_address" ];
               target_label = "name";
