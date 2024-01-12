@@ -88,7 +88,7 @@ in {
         bind-interfaces = true;
         no-resolv = true;
         dhcp-leasefile = "/nix/persist/dnsmasq.leases";
-        dhcp-range = "10.0.0.100,10.0.0.200,12h";
+        dhcp-range = "10.0.0.100,10.0.0.200,30d";
         dhcp-host =
           attrsets.mapAttrsToList (name: host: "${host.mac},${host.ip},${name}")
           secrets.dhcpHosts;
