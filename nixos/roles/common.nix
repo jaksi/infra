@@ -33,7 +33,6 @@ in {
       device = "/dev/disk/by-label/nix";
       fsType = "ext4";
     };
-    "/boot".device = "/dev/disk/by-label/boot";
   };
   swapDevices = [{
     size = 2048;
