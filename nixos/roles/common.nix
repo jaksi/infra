@@ -187,6 +187,9 @@ in {
         ll = "eza -la";
         la = "eza -la";
         lt = "eza -Ta";
+        c = "gh copilot suggest -t shell";
+        cg = "gh copilot suggest -t git";
+        cgh = "gh copilot suggest -t gh";
       };
     };
     git = {
