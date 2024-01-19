@@ -245,7 +245,6 @@ in {
       enable = true;
       dataDir = "/nix/persist/zigbee2mqtt";
       settings.frontend.port = 8081;
-      package = stable.zigbee2mqtt;
     };
     home-assistant = {
       enable = true;
