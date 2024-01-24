@@ -32,8 +32,8 @@ in {
           listenAddress = "localhost";
           configurationPath = pkgs.fetchurl {
             url =
-              "https://raw.githubusercontent.com/prometheus/snmp_exporter/v0.22.0/snmp.yml";
-            hash = "sha256-vzb7aqaRWjxv4x/Ujqqc5T5h/JspuxYNS7A9zTqc6os=";
+              "https://raw.githubusercontent.com/prometheus/snmp_exporter/v0.25.0/snmp.yml";
+            hash = "sha256-MYV7iQ/J5z6L3yURrVH3W3XP1DF7n0q1XiO5jhAXKbU=";
           };
         };
       };
