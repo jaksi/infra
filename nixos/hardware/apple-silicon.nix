@@ -9,4 +9,5 @@
 
   nixpkgs.hostPlatform = "aarch64-linux";
   boot.loader.efi.canTouchEfiVariables = false;
+  hardware.asahi.useExperimentalGPUDriver = true;
 }
