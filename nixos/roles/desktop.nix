@@ -9,7 +9,12 @@ in {
       }/overlay.nix")
   ];
   boot.loader.timeout = 0;
-  security.sudo.wheelNeedsPassword = false;
+  security.sudo = {
+    wheelNeedsPassword = false;
+    extraConfig = ''
+      Defaults env_keep += "TMUX"
+    '';
+  };
   users.users.jaksi = {
     extraGroups = [ "wheel" ];
     hashedPassword = secrets.hashedUserPassword;
