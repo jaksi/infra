@@ -173,7 +173,7 @@ in {
     fish = {
       enable = true;
       interactiveShellInit = ''
-        if not test "$TERM_PROGRAM" = "vscode"; and not test "$TERM" = "linux"; and not set -q TMUX
+        if set -q SSH_CONNECTION; and not set -q TMUX
           exec tmux new-session -As main
         end
         set -U fish_greeting
