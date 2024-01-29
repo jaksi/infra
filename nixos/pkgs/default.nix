@@ -2,8 +2,8 @@ self: super: {
   vscode-cli = super.callPackage ./vscode.nix {
     package = "cli";
     hashes = {
-      x86_64-linux = "sha256-zEaboEYRQfw6WPWJJixufSv6QwRN0mcmfnlOjYm4MdE=";
-      aarch64-linux = "sha256-Kt49ipcc/mpbQE0yVIR23Cjn6DiljNwW7SePMpcu9Os=";
+      x86_64-linux = "sha256-jDW2+xFQcmSwCE/QRyfjwL7B3dqrVAYo1dX4wqx/k9U=";
+      aarch64-linux = "sha256-GOegfG0flyOEZUlCYhUfRxgLXqTcKw3lFBM7oU6RfMY=";
     };
     installPhase = ''
       mkdir -p $out/bin
@@ -14,8 +14,8 @@ self: super: {
   vscode-server = super.callPackage ./vscode.nix {
     package = "server";
     hashes = {
-      x86_64-linux = "sha256-IFsnV4g7pZJD4WdOVa8PHsRpVq7whdje/H2drK0Xxxg=";
-      aarch64-linux = "sha256-v1U2NxshWqAro8bskXsNvMMUtFuSbFhFnMgVKDEykN0=";
+      x86_64-linux = "sha256-oMfV45cJYZiC35spxi49PNh3iytUpdVjd/C3L4lLWL0=";
+      aarch64-linux = "sha256-15JqzUYI/NuQjUGuBOjizx6LlDMkJmfU6H4LWVh2hUk=";
     };
     installPhase = ''
       mkdir -p $out
