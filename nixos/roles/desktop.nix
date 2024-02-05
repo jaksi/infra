@@ -30,7 +30,8 @@ in {
     firefox.enable = true;
   };
   environment = {
-    persistence."/nix/persist/system".directories = [ "/var/lib/alsa" ];
+    persistence."/nix/persist/system".directories =
+      [ "/var/lib/alsa" "/home/jaksi/.mozilla" ];
     systemPackages = with pkgs; [ alacritty playerctl ];
     etc."sway/config".text = ''
       include /etc/sway/config.d/*
