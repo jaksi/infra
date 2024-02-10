@@ -5,7 +5,6 @@
 with lib;
 
 let
-  stable = import <nixos-stable> { config.allowUnfree = true; };
   allHosts = [ "ant" "sun" "dew" "jet" "way" ];
   secrets = import ../secrets.nix;
 in {
@@ -13,6 +12,7 @@ in {
 
   networking.hostName = "sun";
 
+  nixpkgs.config.permittedInsecurePackages = [ "openssl-1.1.1w" ];
   boot.initrd.availableKernelModules = [ "nvme" ];
   networking.firewall.allowedUDPPorts = [ 41642 ];
   environment.persistence."/nix/persist/system".directories =
@@ -265,7 +265,6 @@ in {
         };
         prometheus = { };
       };
-      package = stable.home-assistant;
     };
   };
 }
