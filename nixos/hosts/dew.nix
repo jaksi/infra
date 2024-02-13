@@ -6,12 +6,7 @@ let
   oauth2ProxyPort = 8000;
   secrets = import ../secrets.nix;
 in {
-  imports = [
-    ../hardware/x86_64.nix
-    ../roles/common.nix
-    ../roles/server.nix
-    ../roles/remote.nix
-  ];
+  imports = [ ../hardware/x86_64.nix ../roles/common.nix ];
 
   networking.hostName = "dew";
 
@@ -30,6 +25,7 @@ in {
     allowedUDPPorts = [ 443 41641 ];
   };
   services = {
+    tailscale.extraUpFlags = [ "--accept-routes" ];
     oauth2_proxy = {
       enable = true;
       provider = "github";

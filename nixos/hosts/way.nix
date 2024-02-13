@@ -1,6 +1,6 @@
 # Beelink EQ12
 
-{ config, lib, ... }:
+{ config, lib, modulesPath, ... }:
 
 with lib;
 
@@ -9,10 +9,16 @@ let
   lanInterface = "enp2s0";
   secrets = import ../secrets.nix;
 in {
-  imports = [ ../hardware/intel.nix ../roles/common.nix ../roles/server.nix ];
+  imports = [
+    (modulesPath + "/installer/scan/not-detected.nix")
+    ../hardware/x86_64.nix
+    ../hardware/efi.nix
+    ../roles/common.nix
+  ];
 
   networking.hostName = "way";
 
+  hardware.cpu.intel.updateMicrocode = true;
   boot.initrd.availableKernelModules = [ "nvme" ];
   networking = {
     firewall.allowedUDPPorts = [ 41641 ];

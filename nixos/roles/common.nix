@@ -5,12 +5,10 @@ let
     "https://github.com/nix-community/impermanence/archive/master.tar.gz";
   secrets = import ../secrets.nix;
   colors = {
-    air = "#1e66f5";
-    jet = "#40a02b";
-    dew = "#179299";
-    way = "#d20f39";
-    sun = "#ea76cb";
-    ant = "#df8e1d";
+    dew = "#1e66f5";
+    way = "#40a02b";
+    sun = "#179299";
+    ant = "#d20f39";
   };
 in {
   imports = [ "${impermanence}/nixos.nix" ];
@@ -21,7 +19,38 @@ in {
   };
   nixpkgs = {
     config.allowUnfree = true;
-    overlays = [ (import ../pkgs) ];
+    overlays = [
+      (self: super: {
+        vscode-cli = super.callPackage ../pkgs/vscode.nix {
+          package = "cli";
+          hashes = {
+            x86_64-linux =
+              "sha256-jDW2+xFQcmSwCE/QRyfjwL7B3dqrVAYo1dX4wqx/k9U=";
+            aarch64-linux =
+              "sha256-GOegfG0flyOEZUlCYhUfRxgLXqTcKw3lFBM7oU6RfMY=";
+          };
+          installPhase = ''
+            mkdir -p $out/bin
+            cp code $out/bin/
+          '';
+          linuxPlatform = "alpine";
+        };
+        vscode-server = super.callPackage ../pkgs/vscode.nix {
+          package = "server";
+          hashes = {
+            x86_64-linux =
+              "sha256-oMfV45cJYZiC35spxi49PNh3iytUpdVjd/C3L4lLWL0=";
+            aarch64-linux =
+              "sha256-15JqzUYI/NuQjUGuBOjizx6LlDMkJmfU6H4LWVh2hUk=";
+          };
+          installPhase = ''
+            mkdir -p $out
+            cp -r vscode-server-*/* $out/
+            ln -sf ${self.nodejs_18}/bin/node $out/
+          '';
+        };
+      })
+    ];
   };
   fileSystems = {
     "/" = {
@@ -70,6 +99,7 @@ in {
         "/root/.config/gh"
         "/root/.config/github-copilot"
         "/root/.local/share/fish"
+        "/root/.vscode-server"
       ];
       files = [ "/etc/machine-id" "/root/.nix-channels" ];
     };
@@ -278,6 +308,23 @@ in {
       '';
     };
   };
+  systemd.services.vscode-tunnel = {
+    wantedBy = [ "multi-user.target" ];
+    after = [ "network.target" ];
+    serviceConfig = {
+      ExecStart = ''
+        ${pkgs.vscode-cli}/bin/code tunnel --cli-data-dir /nix/persist/vscode-tunnel --accept-server-license-terms --name ${config.networking.hostName}
+      '';
+      Restart = "always";
+    };
+  };
+  system.activationScripts.vscode-tunnel.text = ''
+    SERVER=${pkgs.vscode-server}
+    COMMIT=$(${pkgs.jq}/bin/jq -r .commit $SERVER/product.json)
+    rm -rf /nix/persist/vscode-tunnel/servers
+    mkdir -p /nix/persist/vscode-tunnel/servers/Stable-$COMMIT
+    ln -sf $SERVER /nix/persist/vscode-tunnel/servers/Stable-$COMMIT/server
+  '';
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

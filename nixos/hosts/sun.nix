@@ -1,18 +1,24 @@
 # Minisforum UM790 Pro
 
-{ config, lib, pkgs, ... }:
+{ config, lib, modulesPath, pkgs, ... }:
 
 with lib;
 
 let
-  allHosts = [ "ant" "sun" "dew" "jet" "way" ];
+  allHosts = [ "ant" "sun" "dew" "way" ];
   secrets = import ../secrets.nix;
 in {
-  imports = [ ../hardware/amd.nix ../roles/common.nix ../roles/server.nix ];
+  imports = [
+    (modulesPath + "/installer/scan/not-detected.nix")
+    ./x86_64.nix
+    ./efi.nix
+    ../roles/common.nix
+  ];
 
   networking.hostName = "sun";
 
   nixpkgs.config.permittedInsecurePackages = [ "openssl-1.1.1w" ];
+  hardware.cpu.amd.updateMicrocode = true;
   boot.initrd.availableKernelModules = [ "nvme" ];
   networking.firewall.allowedUDPPorts = [ 41642 ];
   environment.persistence."/nix/persist/system".directories =
