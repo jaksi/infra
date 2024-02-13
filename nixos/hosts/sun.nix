@@ -10,8 +10,8 @@ let
 in {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
-    ./x86_64.nix
-    ./efi.nix
+    ../hardware/x86_64.nix
+    ../hardware/efi.nix
     ../roles/common.nix
   ];
 
