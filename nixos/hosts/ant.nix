@@ -7,7 +7,7 @@
     (modulesPath + "/installer/scan/not-detected.nix")
     <apple-silicon-support/apple-silicon-support>
     ../hardware/efi.nix
-    ../roles/common.nix
+    ../roles/server.nix
   ];
 
   networking.hostName = "ant";

@@ -13,7 +13,7 @@ in {
     (modulesPath + "/installer/scan/not-detected.nix")
     ../hardware/x86_64.nix
     ../hardware/efi.nix
-    ../roles/common.nix
+    ../roles/server.nix
   ];
 
   networking.hostName = "way";
