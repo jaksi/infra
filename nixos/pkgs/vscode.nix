@@ -9,7 +9,7 @@ let
   }.${system} or throwSystem;
 in stdenv.mkDerivation rec {
   pname = "vscode-${package}";
-  version = "1.86.2";
+  version = "1.87.2";
   src = fetchurl {
     url =
       "https://update.code.visualstudio.com/${version}/${package}-${plat}/stable";

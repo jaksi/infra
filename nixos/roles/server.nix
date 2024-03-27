@@ -12,7 +12,7 @@ in {
       vscode-cli = super.callPackage ../pkgs/vscode.nix {
         package = "cli";
         hashes = {
-          x86_64-linux = "sha256-+icvN/jEbjzj9dcUbeAl3bI79CX0ndj95ZNskxXt2qA=";
+          x86_64-linux = "sha256-HLTuAeaUGzacaSU/Ev8O7RUHEiHH8WhYpJaUzZgb+2w=";
           aarch64-linux = "sha256-PFEbnH4DWiRhpfCRrXsFX0XZ3ua+poinaUCgWIXqKKs=";
         };
         installPhase = ''
@@ -24,7 +24,7 @@ in {
       vscode-server = super.callPackage ../pkgs/vscode.nix {
         package = "server";
         hashes = {
-          x86_64-linux = "sha256-+yVjfMwA263SgVga7h6ZnGozncGaMJLE8ece3/8UWxo=";
+          x86_64-linux = "sha256-IyCD7dWzLCk8w7kIyXDZ2mZfw+Qk9LdTvR+P5AjxtsE=";
           aarch64-linux = "sha256-ZVqCZsDCOX5HXCemG93DiLIQFNGNGLQar7mWX02Q8ZI=";
         };
         installPhase = ''
