@@ -30,6 +30,9 @@
         end
         set -U fish_greeting
         function prompt_login
+          set_color -o 8839ef
+          echo -n (prompt_hostname)
+          set_color normal
         end
       '';
       shellAliases = {
