@@ -13,7 +13,7 @@ in {
         package = "cli";
         hashes = {
           x86_64-linux = "sha256-HLTuAeaUGzacaSU/Ev8O7RUHEiHH8WhYpJaUzZgb+2w=";
-          aarch64-linux = "sha256-PFEbnH4DWiRhpfCRrXsFX0XZ3ua+poinaUCgWIXqKKs=";
+          aarch64-linux = "sha256-5Xn36QVIiTyDh9WTOZFV33XLLpEjdnqaxzgEM8hOR4k=";
         };
         installPhase = ''
           mkdir -p $out/bin
@@ -25,7 +25,7 @@ in {
         package = "server";
         hashes = {
           x86_64-linux = "sha256-IyCD7dWzLCk8w7kIyXDZ2mZfw+Qk9LdTvR+P5AjxtsE=";
-          aarch64-linux = "sha256-ZVqCZsDCOX5HXCemG93DiLIQFNGNGLQar7mWX02Q8ZI=";
+          aarch64-linux = "sha256-cksMc4b1VE2kAvoulc3r9cFpvCRgPFLAIBnJ/X2TqzQ=";
         };
         installPhase = ''
           mkdir -p $out
