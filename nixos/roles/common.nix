@@ -1,15 +1,6 @@
 { config, pkgs, ... }:
 
-let
-  colors = {
-    dew = "#1e66f5";
-    way = "#40a02b";
-    sun = "#179299";
-    ant = "#d20f39";
-    win = "#ea76cb";
-  };
-in {
-
+{
   nix.gc = {
     automatic = true;
     options = "--delete-old";
@@ -131,9 +122,7 @@ in {
         set -g window-status-bell-style fg=#eff1f5,bg=#8839ef
         set -g escape-time 10
         set -g default-terminal "tmux-256color"
-        set -g window-status-current-style fg=#eff1f5,bg=${
-          colors.${config.networking.hostName}
-        }
+        set -g window-status-current-style fg=#eff1f5,bg=#8839ef
         set -sa terminal-features ',xterm-256color:RGB'
       '';
     };
