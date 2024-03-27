@@ -130,7 +130,6 @@ in {
         set -g window-status-style fg=#4c4f69,bg=#acb0be
         set -g window-status-bell-style fg=#eff1f5,bg=#8839ef
         set -g escape-time 10
-        set -g allow-passthrough 1
         set -g default-terminal "tmux-256color"
         set -g window-status-current-style fg=#eff1f5,bg=${
           colors.${config.networking.hostName}
